@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useEffect } from "react";
 
 /**
@@ -17,27 +17,35 @@ import { useEffect } from "react";
  *
  * So: Simply move ALL images to
  */
-export const Carrousel = () => {
+export const Carrousel = ({ imageWidth = 300 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const refPause = useRef(false);
   const images = [
     { alt: "Apple", url: "http://source.unsplash.com/300x200/?apple" },
     { alt: "Cherry", url: "http://source.unsplash.com/300x200/?cherry" },
     { alt: "Banana", url: "http://source.unsplash.com/300x200/?banana" },
   ];
 
+  const updateIndex = (cb) => {
+    setActiveIndex(cb);
+    // prevent automatic updating in next run
+    refPause.current = true;
+  };
   const increaseIndex = () => {
-    // make sure we cycle back to 0 at upper boundary
-    setActiveIndex((index) => (index + 1 === images.length ? 0 : index + 1));
+    // make sure we cycle back to 0 when reached last item
+    updateIndex((index) => (index + 1 === images.length ? 0 : index + 1));
   };
   const decreaseIndex = () => {
-    // make sure we cycle to end at 0
-    setActiveIndex((index) => (index === 0 ? images.length - 1 : index - 1));
+    // make sure we cycle to last item when reached first item
+    updateIndex((index) => (index === 0 ? images.length - 1 : index - 1));
   };
 
   useEffect(() => {
     // by default: increase index every 3 secs
     const timer = setInterval(() => {
-      increaseIndex();
+      // in case we cycle manually => pause the automatic increase
+      if (!refPause.current) increaseIndex();
+      refPause.current = false;
     }, 3000);
 
     // cleanup of timer
@@ -47,8 +55,6 @@ export const Carrousel = () => {
       timer && clearInterval(timer);
     };
   }, []);
-
-  const imageWidth = 300;
 
   return (
     <>
