@@ -17,15 +17,10 @@ import { useEffect } from "react";
  *
  * So: Simply move ALL images to
  */
-export const Carrousel = ({ imageWidth = 300 }) => {
+export const Carrousel = ({ images = [], imageWidth = 300 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const refPause = useRef(false);
-  const images = [
-    { alt: "Apple", url: "http://source.unsplash.com/300x200/?apple" },
-    { alt: "Cherry", url: "http://source.unsplash.com/300x200/?cherry" },
-    { alt: "Banana", url: "http://source.unsplash.com/300x200/?banana" },
-  ];
-
+  
   const updateIndex = (cb) => {
     setActiveIndex(cb);
     // prevent automatic updating in next run
@@ -72,8 +67,6 @@ export const Carrousel = ({ imageWidth = 300 }) => {
             <img key={img.alt} src={img.url} alt={img.alt} />
           ))}
         </div>
-      </div>
-      <div className="btn-actions">
         <button onClick={decreaseIndex}>&lt;</button>
         <button onClick={increaseIndex}>&gt;</button>
       </div>
