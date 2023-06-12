@@ -48,15 +48,17 @@ button {
   width: 300px;
   height: 200px;
   display: inline-block;
-  background-color: red;
-  border: 1px solid #ccc;
+  background-color: #ccc;
+  /* border: 1px solid #ccc; */
 }
 
 /* fixate buttons at edges */
 .carrousel button {
   position: absolute;
-  top: 50%;
+  /* align vertically */
+  top: 50%;  
   transform: translateY(-50%);
+  opacity: 0.3;
 }
 
 .carrousel button:nth-of-type(1) {
