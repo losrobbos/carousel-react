@@ -1,4 +1,4 @@
-# Caroursel with vanilla.js
+# Caroursel with React
 
 Demo: https://carousselo.vercel.app
 
