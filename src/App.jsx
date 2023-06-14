@@ -13,7 +13,6 @@ function App() {
     { alt: "Rasperry", url: "http://source.unsplash.com/300x200/?raspberries" },
   ];
 
-
   return (
     <div className="App">
       <header className="App-header">
